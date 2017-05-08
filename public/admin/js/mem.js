@@ -14,6 +14,11 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
         alert("Error");
     });
 
+    $scope.valid = {
+        text: 'guest',
+        word: /^\s*\w*\s*$/
+    };
+
     /*Sort and search Data*/
     $scope.sortColumn = 'id';
     $scope.reverse = true;
@@ -66,13 +71,15 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     /*Add and Edit Member*/
     $scope.save = function (state, id) {
         if (state == 'add') {
+            var data = $httpParamSerializerJQLike($scope.member);
             $http({
                 method: 'POST',
                 url: API + 'add',
-                data: $httpParamSerializerJQLike($scope.member),
+                data: data,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
                 console.log(response);
+                alert(data);
                 location.reload();
             }, function errorCallback(response) {
                 console.log(response);
@@ -113,17 +120,19 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
 
 app.directive('file',function () {
     return {
-        scope: {
-            file: '='
+        scope:{
+            file:'='
         },
         link:function (scope, el, attrs) {
             el.bind('change',function (event) {
                 var file = event.target.files[0];
-                console.log(file);
                 scope.file = file ? file : '';
                 scope.$apply();
-            });
+            })
         }
     }
 });
+
+
+
 
