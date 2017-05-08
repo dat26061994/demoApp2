@@ -95,7 +95,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group">
                                     <label for="avatar" class="control-label">Avatar:</label>
-                                    <input my-directive type="file" name="file" ng-model="member.file">
+                                    <input file type="file" name="file" ng-model="member.file">
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="control-label">Name:</label>

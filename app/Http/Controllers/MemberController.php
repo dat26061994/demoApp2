@@ -21,7 +21,7 @@ class MemberController extends Controller
         $member->name = $request->name;
         $member->age = $request->age;
         $member->address = $request->address;
-        if (!empty($request->file('file'))) {
+        if (!empty($request->File('file'))) {
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;
             $request->file('file')->move('public/upload/', $fileName);

@@ -119,6 +119,7 @@ app.directive('file',function () {
         link:function (scope, el, attrs) {
             el.bind('change',function (event) {
                 var file = event.target.files[0];
+                console.log(file);
                 scope.file = file ? file : '';
                 scope.$apply();
             });
