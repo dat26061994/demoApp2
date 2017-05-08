@@ -1,0 +1,25 @@
+.col-left{
+    background-color: #f8f8f8;
+    border: #e7e7e7;;
+}
+#imaginary_container{
+    margin-top:20%; /* Don't copy this */
+}
+.stylish-input-group .input-group-addon{
+    background: white !important;
+}
+.stylish-input-group .form-control{
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+.table>thead>tr>th{
+    text-align: center;
+}
+.table>tbody>tr>td{
+    text-align: center;
+}
