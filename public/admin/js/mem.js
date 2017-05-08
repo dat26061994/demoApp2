@@ -1,4 +1,4 @@
-var app = angular.module('my-app', ['angularUtils.directives.dirPagination']).constant('API', 'http://localhost:8080/demoApp2/admin/');
+var app = angular.module('my-app', ['angularUtils.directives.dirPagination',"flow"]).constant('API', 'http://localhost:8080/demoApp2/admin/');
 
 app.controller('MemberController', function ($scope, $http, API, $httpParamSerializerJQLike) {
 
@@ -41,8 +41,18 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     $scope.members = [];
     $scope.pageSize = 5;
     $scope.currentPage = 0;
-
-
+    /*privew image before update*/
+    $scope.imageStrings = [];
+    $scope.processFiles = function (files) {
+        angular.forEach(files,function (flowFile, i) {
+            var fileReader = new FileReader();
+            fileReader.onload =function (event) {
+                var uri = event.target.result;
+                $scope.imageStrings[i] = uri;
+            };
+            fileReader.readAsDataURL(flowFile.file);
+        });
+    }
     /* show modal*/
     $scope.modal = function (state, id) {
         $scope.state = state;
@@ -118,19 +128,23 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     };
 });
 
-app.directive('file',function () {
-    return {
-        scope:{
-            file:'='
-        },
-        link:function (scope, el, attrs) {
-            el.bind('change',function (event) {
-                var file = event.target.files[0];
-                scope.file = file ? file : '';
-                scope.$apply();
-            })
-        }
-    }
+
+
+app.factory('httpPostFactory', function($http) {
+    return function(file, data, callback) {
+        $http({
+            method: 'POST',
+            url: file,
+            data: data,
+            headers: {
+                'Content-Type': undefined
+            }
+        }).then(function successCallback(response) {
+            callback(response);
+        }, function errorCallback(response) {
+            console.log(data);
+        });
+    };
 });
 
 
