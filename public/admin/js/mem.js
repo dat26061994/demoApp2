@@ -1,11 +1,11 @@
-var app = angular.module('my-app', ['angularUtils.directives.dirPagination',"flow"]).constant('API', 'http://localhost:8080/demoApp2/admin/');
+var app = angular.module('my-app', ['angularUtils.directives.dirPagination',"flow"]);
 
-app.controller('MemberController', function ($scope, $http, API, $httpParamSerializerJQLike) {
+app.controller('MemberController', function ($scope, $http , $httpParamSerializerJQLike) {
 
     /*  show all member */
     $http({
         method: 'GET',
-        url: API + 'list'
+        url: 'admin/list'
     }).then(function successCallback(response) {
         console.log(response);
         $scope.members = response.data;
@@ -64,7 +64,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
                 $scope.frmTitle = 'Edit Member';
                 $http({
                     method: 'GET',
-                    url: API + 'edit/' + id
+                    url:  'admin/edit/' + id
                 }).then(function successCallback(response) {
                     $scope.id = id;
                     $scope.member = response.data;
@@ -84,7 +84,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
             var data = $httpParamSerializerJQLike($scope.member);
             $http({
                 method: 'POST',
-                url: API + 'add',
+                url: 'admin/add',
                 data: data,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
@@ -98,7 +98,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
         } else if (state == 'edit') {
             $http({
                 method: 'POST',
-                url: API + 'edit/' + id,
+                url:  'admin/edit/' + id,
                 data: $httpParamSerializerJQLike($scope.member),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
@@ -114,7 +114,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     $scope.comfirmDelete = function (id) {
         var isConfirmDelete = confirm("Do you want delete ??");
         if (isConfirmDelete) {
-            $http.get(API + 'delete/' + id).then(function successCallback(response) {
+            $http.get('admin/delete/' + id).then(function successCallback(response) {
                 console.log(response);
                 location.reload();
             }, function errorCallback(response) {
