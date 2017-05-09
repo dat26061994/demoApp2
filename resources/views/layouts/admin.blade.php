@@ -89,6 +89,12 @@
 {{--Pagination Angular--}}
 <script src="{{ url('public/admin/js/dirPagination.js') }}"></script>
 
+<script src="{{ url('public/admin/js/ng-flow-standalone.min.js') }}"></script>
+<script src="{{ url('public/admin/js/ng-flow.min.js') }}"></script>
+<script src="{{ url('public/admin/js/ng-flow.min.js') }}"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/ng-flow/2.5.1/ng-flow-standalone.min.js"></script>
+
+
 </body>
 
 </html>

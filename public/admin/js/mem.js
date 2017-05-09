@@ -1,11 +1,11 @@
-var app = angular.module('my-app', ['angularUtils.directives.dirPagination']).constant('API', 'http://localhost:8080/demoApp2/admin/');
+var app = angular.module('my-app', ['angularUtils.directives.dirPagination',"flow"]);
 
-app.controller('MemberController', function ($scope, $http, API, $httpParamSerializerJQLike) {
+app.controller('MemberController', function ($scope, $http , $httpParamSerializerJQLike) {
 
     /*  show all member */
     $http({
         method: 'GET',
-        url: API + 'list'
+        url: 'admin/list'
     }).then(function successCallback(response) {
         console.log(response);
         $scope.members = response.data;
@@ -13,6 +13,11 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
         console.log(response);
         alert("Error");
     });
+
+    $scope.valid = {
+        text: 'guest',
+        word: /^\s*\w*\s*$/
+    };
 
     /*Sort and search Data*/
     $scope.sortColumn = 'id';
@@ -36,8 +41,18 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     $scope.members = [];
     $scope.pageSize = 5;
     $scope.currentPage = 0;
-
-
+    /*privew image before update*/
+    $scope.imageStrings = [];
+    $scope.processFiles = function (files) {
+        angular.forEach(files,function (flowFile, i) {
+            var fileReader = new FileReader();
+            fileReader.onload =function (event) {
+                var uri = event.target.result;
+                $scope.imageStrings[i] = uri;
+            };
+            fileReader.readAsDataURL(flowFile.file);
+        });
+    }
     /* show modal*/
     $scope.modal = function (state, id) {
         $scope.state = state;
@@ -49,7 +64,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
                 $scope.frmTitle = 'Edit Member';
                 $http({
                     method: 'GET',
-                    url: API + 'edit/' + id
+                    url:  'admin/edit/' + id
                 }).then(function successCallback(response) {
                     $scope.id = id;
                     $scope.member = response.data;
@@ -66,13 +81,15 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     /*Add and Edit Member*/
     $scope.save = function (state, id) {
         if (state == 'add') {
+            var data = $httpParamSerializerJQLike($scope.member);
             $http({
                 method: 'POST',
-                url: API + 'add',
-                data: $httpParamSerializerJQLike($scope.member),
+                url: 'admin/add',
+                data: data,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
                 console.log(response);
+                alert(data);
                 location.reload();
             }, function errorCallback(response) {
                 console.log(response);
@@ -81,7 +98,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
         } else if (state == 'edit') {
             $http({
                 method: 'POST',
-                url: API + 'edit/' + id,
+                url:  'admin/edit/' + id,
                 data: $httpParamSerializerJQLike($scope.member),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
@@ -97,7 +114,7 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     $scope.comfirmDelete = function (id) {
         var isConfirmDelete = confirm("Do you want delete ??");
         if (isConfirmDelete) {
-            $http.get(API + 'delete/' + id).then(function successCallback(response) {
+            $http.get('admin/delete/' + id).then(function successCallback(response) {
                 console.log(response);
                 location.reload();
             }, function errorCallback(response) {
@@ -111,18 +128,25 @@ app.controller('MemberController', function ($scope, $http, API, $httpParamSeria
     };
 });
 
-app.directive('file',function () {
-    return {
-        scope: {
-            file: '='
-        },
-        link:function (scope, el, attrs) {
-            el.bind('change',function (event) {
-                var file = event.target.files[0];
-                scope.file = file ? file : '';
-                scope.$apply();
-            });
-        }
-    }
+
+
+app.factory('httpPostFactory', function($http) {
+    return function(file, data, callback) {
+        $http({
+            method: 'POST',
+            url: file,
+            data: data,
+            headers: {
+                'Content-Type': undefined
+            }
+        }).then(function successCallback(response) {
+            callback(response);
+        }, function errorCallback(response) {
+            console.log(data);
+        });
+    };
 });
+
+
+
 

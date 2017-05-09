@@ -54,7 +54,8 @@
                             @if('mem.avatar' == '')
                                 <img src="{{ asset('public/upload/') }}" alt="">
                             @else
-                                <img style="height: 50px; width: 50px" src="{{ asset('public/upload/default_avatar.png') }}" alt="">
+                                <img style="height: 50px; width: 50px"
+                                     src="{{ asset('public/upload/default_avatar.png') }}" alt="">
                             @endif
                         </td>
                         <td>@{{ mem.name }}</td>
@@ -91,23 +92,60 @@
                             </h4>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" enctype="multipart/form-data">
+                            <form name="memberForm" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <div class="form-group">
+
+                                <div class="form-group" flow-init flow-name="uploader.flow"
+                                     flow-files-added="processFiles($files)">
                                     <label for="avatar" class="control-label">Avatar:</label>
-                                    <input my-directive type="file" name="file" ng-model="member.file">
+                                    <button flow-btn type="file" name="file" ng-model="member.file">Upload Images
+                                    </button>
+                                    <div ng-repeat="image in uploader.flow.files track by $index">
+                                        <center><img class="preview" flow-img="image"/><br></center>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="control-label">Name:</label>
-                                    <input type="text" class="form-control" name="name" ng-model="member.name">
+                                    <input type="text" class="form-control" name="name" ng-model="member.name"
+                                           ng-maxlength="8" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/">
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.name.$error.required && !memberForm.name.$pristine"
+                                       class="help-block">Member name is required.</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.name.$error.pattern && !memberForm.name.$pristine"
+                                       class="help-block">Single word only!.</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.name.$error.maxlength && !memberForm.name.$pristine"
+                                       class="help-block">Member name is max 100 character.</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="age" class="control-label">Age:</label>
-                                    <input type="text" class="form-control" name="age" ng-model="member.age">
+                                    <input type="text" ng-pattern="/^[0-9]*$/" class="form-control" name="age"
+                                           ng-model="member.age" ng-maxlength="2" ng-required="true"
+                                           style="width: 15%;">
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.age.$error.pattern && !memberForm.age.$pristine"
+                                       class="help-block">Member age is must numberic.</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.age.$error.required && !memberForm.age.$pristine"
+                                       class="help-block">Member age is required.</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.age.$error.maxlength && !memberForm.age.$pristine"
+                                       class="help-block">Member age is max 2 digits.</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="address" class="control-label">Address:</label>
-                                    <textarea name="address" class="form-control" ng-model="member.address"></textarea>
+                                    <textarea name="address" class="form-control" ng-model="member.address"
+                                              ng-maxlength="300" ng-required="true"></textarea>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.address.$error.required && !memberForm.address.$pristine"
+                                       class="help-block">Member address is required.</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.address.$error.pattern && !memberForm.address.$pristine"
+                                       class="help-block">Single word only!.</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.address.$error.maxlength && !memberForm.address.$pristine"
+                                       class="help-block">Member address is max 300 character.</p>
                                 </div>
                             </form>
                         </div>
