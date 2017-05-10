@@ -23,9 +23,8 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         url: 'admin/list'
     }).then(function successCallback(response) {
         $scope.members = response.data;
-        console.log(response);
     }, function errorCallback(response) {
-        alert("Error Show List Member");
+        sweetAlert("Error...", "Something went wrong!", "error");
     });
 
     $scope.valid = {
@@ -59,31 +58,25 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     /* show modal*/
     $scope.modal = function (state, id) {
         $scope.state = state;
-        switch (state) {
-            case 'add':
-                $scope.frmTitle = 'Add New Member';
-                $scope.member = {};
+        if (state == 'add'){
+            $scope.member = {};
+            $scope.file = null;
+            $('#exampleModaladd').modal('show');
+        }else if(state == 'edit'){
+            $http({
+                method: 'GET',
+                url: 'admin/edit/' + id
+            }).then(function successCallback(response) {
+                $scope.id = id;
                 $scope.file = null;
-                break;
-            case 'edit':
-                $scope.frmTitle = 'Edit Member';
-                $scope.file = null;
-                $http({
-                    method: 'GET',
-                    url: 'admin/edit/' + id
-                }).then(function successCallback(response) {
-                    $scope.id = id;
-                    $scope.member = response.data;
-                    $('.avatar').attr('src','public/upload/'+response.data.avatar);
-                    console.log(response);
-                }, function errorCallback() {
-                    alert('ERROR Show Modal Edit');
-                });
-                break;
-            default:
-                break;
+                $scope.member = response.data;
+                $('.avatar').attr('src', 'public/upload/' + response.data.avatar);
+                $('.inputCurrentAvatar').attr('value',response.data.avatar);
+            }, function errorCallback() {
+                sweetAlert("Error...", "Something went wrong!", "error");
+            });
+            $('#exampleModaledit').modal('show');
         }
-        $('#exampleModal').modal('show');
     };
 
     /*Add and Edit Member*/
@@ -107,9 +100,10 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                     return formData;
                 }
             }).then(function successCallback(response) {
+                swal("Success!", "You clicked the button!", "success");
                 location.reload();
             }, function errorCallback(response) {
-                alert('Error Add New Member');
+                sweetAlert("Error...", "Something went wrong! Can not add new Member", "error");
             });
 
         } else if (state == 'edit') {
@@ -131,9 +125,10 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                     return formData;
                 }
             }).then(function successCallback(response) {
+                swal("Success!", "You clicked the button!", "success");
                 location.reload();
             }, function errorCallback(response) {
-                alert('Error Edit Member');
+                sweetAlert("Error...", "Something went wrong! Can not edit member.", "error");
             });
         }
     };
@@ -142,9 +137,10 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         var isConfirmDelete = confirm("Do you want delete ??");
         if (isConfirmDelete) {
             $http.get('admin/delete/' + id).then(function successCallback(response) {
+                swal("Success!", "", "success");
                 location.reload();
             }, function errorCallback(response) {
-                alert('Error Delete Member');
+                sweetAlert("Oops...", "Something went wrong! Can not delete member", "error");
             });
         } else {
             return false;

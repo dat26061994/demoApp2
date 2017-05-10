@@ -23,13 +23,6 @@ class MemberController extends Controller
         $member->age = $request->age;
         $member->address = $request->address;
         if (!empty($request->file('file'))) {
-            $this->validate($request, [
-                'file' => 'mimes:jpg,jpeg,png,gif|max:10240'
-            ],
-                [
-                    'file.mimes' => 'Please choose file image(jpg,jpeg,png,gif).',
-                    'file.max' => 'File too larg.'
-                ]);
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;
             $request->file('file')->move('public/upload/', $fileName);
@@ -55,15 +48,8 @@ class MemberController extends Controller
         $member->name = $request->name;
         $member->age = $request->age;
         $member->address = $request->address;
-        $imgCurrent = 'public/upload/' . $request->currentImage;
+        $imgCurrent = 'public/upload/' . $request->currentAvatar;
         if (!empty($request->file('file'))) {
-            $this->validate($request, [
-                'file' => 'mimes:jpg,jpeg,png,gif|max:10240'
-            ],
-                [
-                    'file.mimes' => 'Please choose file image(jpg,jpeg,png,gif).',
-                    'file.max' => 'File too larg.'
-                ]);
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;
             $request->file('file')->move('public/upload/', $fileName);

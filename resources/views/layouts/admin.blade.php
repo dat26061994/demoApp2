@@ -13,6 +13,8 @@
     <link href="{{ url('public/admin/css/bootstrap.min.css') }}" rel="stylesheet">
     {{-- mycss--}}
     <link href="{{ url('public/css/mycss.css') }}" rel="stylesheet">
+    {{--swetalert--}}
+    <link href="{{ url('public/admin/css/sweetalert.css') }}" rel="stylesheet">
 
 </head>
 
@@ -97,6 +99,8 @@
 <script src="{{ url('public/admin/js/ng-file-upload-shim.js') }}"></script>
 <script src="{{ url('public/admin/js/ng-file-upload-shim.min.js') }}"></script>
 <script src="{{ url('public/admin/js/ng-file-upload.min.js') }}"></script>
+{{--sweetalert--}}
+<script src="{{ url('public/admin/js/sweetalert.min.js') }}"></script>
 </body>
 
 </html>
