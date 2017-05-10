@@ -45,7 +45,11 @@
                     <th ng-click="sortData('address')">
                         <div ng-class="getSortClass('address')">Address
                     </th>
-                    <th>Action</th>
+                    <th>
+                        <button data-toggle="modal" title="Add" type="button"
+                                class="btn btn-primary" ng-click="modal('add')"><i
+                                    class="glyphicon glyphicon-pencil" style="width: 60px;"></i></button>
+                    </th>
                     </thead>
                     <tbody>
                     <tr dir-paginate="mem in members | orderBy: sortColumn:reverse | filter:searchData | itemsPerPage: pageSize">
@@ -65,9 +69,6 @@
                         <td>@{{ mem.age }}</td>
                         <td>@{{ mem.address }}</td>
                         <td style="text-align: center;">
-                            <button data-toggle="modal" title="Add" type="button"
-                                    class="btn btn-primary" ng-click="modal('add')"><i
-                                        class="glyphicon glyphicon-pencil"></i></button>
                             <button type="button" class="btn btn-warning" ng-click="modal('edit',mem.id)"><i
                                         class="glyphicon glyphicon-wrench"></i>
                             </button>
@@ -99,7 +100,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                 <div class="form-group">
-                                    <label for="avatar" class="control-label">Avatar:</label>
+                                    <label for="avatar" class="control-label">New Avatar:</label>
                                     <input type="file" ngf-select file ng-model="file" name="file"
                                            ngf-pattern="'image/*'"
                                            accept="image/*" ngf-max-size="2MB"
@@ -117,6 +118,12 @@
                                                      class="thumb"><br></center>
                                         <button class="btn btn-primary" ng-click="file = null" ng-show="file">Remove
                                         </button>
+                                    </div>
+                                    <div>
+                                        <label for="avatar" class="control-label">Avatar Current:</label>
+                                        <center>
+                                            <img style="height: 150px; width: 150px;" class="avatar" src="" alt="">
+                                        </center>
                                     </div>
 
                                 </div>

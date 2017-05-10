@@ -15,7 +15,7 @@ class MemberController extends Controller
         return $member->getList();
     }
 
-    public function postAdd(Request $request)
+    public function postAdd(MemberRequest $request)
     {
         $member = new Member();
         $randomString = str_random(10);
@@ -23,6 +23,13 @@ class MemberController extends Controller
         $member->age = $request->age;
         $member->address = $request->address;
         if (!empty($request->file('file'))) {
+            $this->validate($request, [
+                'file' => 'mimes:jpg,jpeg,png,gif|max:10240'
+            ],
+                [
+                    'file.mimes' => 'Please choose file image(jpg,jpeg,png,gif).',
+                    'file.max' => 'File too larg.'
+                ]);
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;
             $request->file('file')->move('public/upload/', $fileName);
@@ -39,8 +46,9 @@ class MemberController extends Controller
         return $member->findId($id);
     }
 
-    public function postEdit($id, Request $request)
+    public function postEdit($id, MemberRequest $request)
     {
+
         $memberModel = new Member();
         $member = $memberModel->findId($id);
         $randomString = str_random(10);
@@ -49,6 +57,13 @@ class MemberController extends Controller
         $member->address = $request->address;
         $imgCurrent = 'public/upload/' . $request->currentImage;
         if (!empty($request->file('file'))) {
+            $this->validate($request, [
+                'file' => 'mimes:jpg,jpeg,png,gif|max:10240'
+            ],
+                [
+                    'file.mimes' => 'Please choose file image(jpg,jpeg,png,gif).',
+                    'file.max' => 'File too larg.'
+                ]);
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;
             $request->file('file')->move('public/upload/', $fileName);

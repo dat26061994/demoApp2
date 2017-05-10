@@ -23,6 +23,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         url: 'admin/list'
     }).then(function successCallback(response) {
         $scope.members = response.data;
+        console.log(response);
     }, function errorCallback(response) {
         alert("Error Show List Member");
     });
@@ -62,16 +63,19 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
             case 'add':
                 $scope.frmTitle = 'Add New Member';
                 $scope.member = {};
-                $scope.file = '';
+                $scope.file = null;
                 break;
             case 'edit':
                 $scope.frmTitle = 'Edit Member';
+                $scope.file = null;
                 $http({
                     method: 'GET',
                     url: 'admin/edit/' + id
                 }).then(function successCallback(response) {
                     $scope.id = id;
                     $scope.member = response.data;
+                    $('.avatar').attr('src','public/upload/'+response.data.avatar);
+                    console.log(response);
                 }, function errorCallback() {
                     alert('ERROR Show Modal Edit');
                 });
