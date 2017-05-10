@@ -48,7 +48,6 @@ class MemberController extends Controller
         $member->age = $request->age;
         $member->address = $request->address;
         $imgCurrent = 'public/upload/' . $request->currentImage;
-        dd($request->currentImage);
         if (!empty($request->file('file'))) {
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;

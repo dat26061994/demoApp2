@@ -9,7 +9,6 @@ app.directive('file', function () {
             element.bind('change', function (event) {
                 var file = event.target.files[0];
                 scope.file = file ? file : '';
-                console.log(file);
                 scope.$apply();
             })
         }
@@ -23,11 +22,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         method: 'GET',
         url: 'admin/list'
     }).then(function successCallback(response) {
-        console.log(response);
         $scope.members = response.data;
     }, function errorCallback(response) {
-        console.log(response);
-        alert("Error");
+        alert("Error Show List Member");
     });
 
     $scope.valid = {
@@ -75,9 +72,8 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 }).then(function successCallback(response) {
                     $scope.id = id;
                     $scope.member = response.data;
-                    console.log(response);
                 }, function errorCallback() {
-                    alert('ERROR');
+                    alert('ERROR Show Modal Edit');
                 });
                 break;
             default:
@@ -107,11 +103,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                     return formData;
                 }
             }).then(function successCallback(response) {
-                console.log($scope.member.age, $scope.file);
                 location.reload();
             }, function errorCallback(response) {
-                console.log(response);
-                alert('Error');
+                alert('Error Add New Member');
             });
 
         } else if (state == 'edit') {
@@ -133,11 +127,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                     return formData;
                 }
             }).then(function successCallback(response) {
-                console.log($scope.member.age, $scope.file);
                 location.reload();
             }, function errorCallback(response) {
-                console.log(response);
-                alert('Error');
+                alert('Error Edit Member');
             });
         }
     };
@@ -146,11 +138,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         var isConfirmDelete = confirm("Do you want delete ??");
         if (isConfirmDelete) {
             $http.get('admin/delete/' + id).then(function successCallback(response) {
-                console.log(response);
                 location.reload();
             }, function errorCallback(response) {
-                console.log(response);
-                alert('Error');
+                alert('Error Delete Member');
             });
         } else {
             return false;
