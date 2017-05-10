@@ -1,17 +1,30 @@
-var app = angular.module('my-app', ['angularUtils.directives.dirPagination',"flow"]);
+var app = angular.module('my-app', ['angularUtils.directives.dirPagination', "flow", 'ngFileUpload']);
 
-app.controller('MemberController', function ($scope, $http , $httpParamSerializerJQLike) {
+app.directive('file', function () {
+    return {
+        scope: {
+            file: '='
+        },
+        link: function (scope, element, attr) {
+            element.bind('change', function (event) {
+                var file = event.target.files[0];
+                scope.file = file ? file : '';
+                scope.$apply();
+            })
+        }
+    }
+});
+
+app.controller('MemberController', function ($scope, $http, $httpParamSerializerJQLike) {
 
     /*  show all member */
     $http({
         method: 'GET',
         url: 'admin/list'
     }).then(function successCallback(response) {
-        console.log(response);
         $scope.members = response.data;
     }, function errorCallback(response) {
-        console.log(response);
-        alert("Error");
+        alert("Error Show List Member");
     });
 
     $scope.valid = {
@@ -41,35 +54,26 @@ app.controller('MemberController', function ($scope, $http , $httpParamSerialize
     $scope.members = [];
     $scope.pageSize = 5;
     $scope.currentPage = 0;
-    /*privew image before update*/
-    $scope.imageStrings = [];
-    $scope.processFiles = function (files) {
-        angular.forEach(files,function (flowFile, i) {
-            var fileReader = new FileReader();
-            fileReader.onload =function (event) {
-                var uri = event.target.result;
-                $scope.imageStrings[i] = uri;
-            };
-            fileReader.readAsDataURL(flowFile.file);
-        });
-    }
+
     /* show modal*/
     $scope.modal = function (state, id) {
         $scope.state = state;
         switch (state) {
             case 'add':
                 $scope.frmTitle = 'Add New Member';
+                $scope.member = {};
+                $scope.file = '';
                 break;
             case 'edit':
                 $scope.frmTitle = 'Edit Member';
                 $http({
                     method: 'GET',
-                    url:  'admin/edit/' + id
+                    url: 'admin/edit/' + id
                 }).then(function successCallback(response) {
                     $scope.id = id;
                     $scope.member = response.data;
                 }, function errorCallback() {
-                    alert('ERROR');
+                    alert('ERROR Show Modal Edit');
                 });
                 break;
             default:
@@ -81,32 +85,51 @@ app.controller('MemberController', function ($scope, $http , $httpParamSerialize
     /*Add and Edit Member*/
     $scope.save = function (state, id) {
         if (state == 'add') {
-            var data = $httpParamSerializerJQLike($scope.member);
             $http({
                 method: 'POST',
                 url: 'admin/add',
-                data: data,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                data: {
+                    name: $scope.member.name,
+                    age: $scope.member.age,
+                    address: $scope.member.address,
+                    file: $scope.file
+                },
+                headers: {'Content-Type': undefined},
+                transformRequest: function (data, headersGetter) {
+                    var formData = new FormData();
+                    angular.forEach(data, function (value, key) {
+                        formData.append(key, value);
+                    });
+                    return formData;
+                }
             }).then(function successCallback(response) {
-                console.log(response);
-                alert(data);
                 location.reload();
             }, function errorCallback(response) {
-                console.log(response);
-                alert('Error');
+                alert('Error Add New Member');
             });
+
         } else if (state == 'edit') {
             $http({
                 method: 'POST',
-                url:  'admin/edit/' + id,
-                data: $httpParamSerializerJQLike($scope.member),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                url: 'admin/edit/' + id,
+                data: {
+                    name: $scope.member.name,
+                    age: $scope.member.age,
+                    address: $scope.member.address,
+                    file: $scope.file
+                },
+                headers: {'Content-Type': undefined},
+                transformRequest: function (data, headersGetter) {
+                    var formData = new FormData();
+                    angular.forEach(data, function (value, key) {
+                        formData.append(key, value);
+                    });
+                    return formData;
+                }
             }).then(function successCallback(response) {
-                console.log(response);
                 location.reload();
             }, function errorCallback(response) {
-                console.log(response);
-                alert('Error');
+                alert('Error Edit Member');
             });
         }
     };
@@ -115,11 +138,9 @@ app.controller('MemberController', function ($scope, $http , $httpParamSerialize
         var isConfirmDelete = confirm("Do you want delete ??");
         if (isConfirmDelete) {
             $http.get('admin/delete/' + id).then(function successCallback(response) {
-                console.log(response);
                 location.reload();
             }, function errorCallback(response) {
-                console.log(response);
-                alert('Error');
+                alert('Error Delete Member');
             });
         } else {
             return false;
@@ -127,26 +148,5 @@ app.controller('MemberController', function ($scope, $http , $httpParamSerialize
 
     };
 });
-
-
-
-app.factory('httpPostFactory', function($http) {
-    return function(file, data, callback) {
-        $http({
-            method: 'POST',
-            url: file,
-            data: data,
-            headers: {
-                'Content-Type': undefined
-            }
-        }).then(function successCallback(response) {
-            callback(response);
-        }, function errorCallback(response) {
-            console.log(data);
-        });
-    };
-});
-
-
 
 

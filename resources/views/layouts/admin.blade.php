@@ -88,13 +88,15 @@
 <script src="{{ url('public/admin/js/mem.js') }}"></script>
 {{--Pagination Angular--}}
 <script src="{{ url('public/admin/js/dirPagination.js') }}"></script>
-
+{{--Show Iamge Angular ng-flow--}}
 <script src="{{ url('public/admin/js/ng-flow-standalone.min.js') }}"></script>
 <script src="{{ url('public/admin/js/ng-flow.min.js') }}"></script>
 <script src="{{ url('public/admin/js/ng-flow.min.js') }}"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/ng-flow/2.5.1/ng-flow-standalone.min.js"></script>
-
-
+{{--Angular Upload Image--}}
+<script src="{{ url('public/admin/js/ng-file-upload.js') }}"></script>
+<script src="{{ url('public/admin/js/ng-file-upload-shim.js') }}"></script>
+<script src="{{ url('public/admin/js/ng-file-upload-shim.min.js') }}"></script>
+<script src="{{ url('public/admin/js/ng-file-upload.min.js') }}"></script>
 </body>
 
 </html>

@@ -51,12 +51,15 @@
                     <tr dir-paginate="mem in members | orderBy: sortColumn:reverse | filter:searchData | itemsPerPage: pageSize">
                         <td>@{{ $index + 1 }}</td>
                         <td>
-                            @if('mem.avatar' == '')
-                                <img src="{{ asset('public/upload/') }}" alt="">
-                            @else
-                                <img style="height: 50px; width: 50px"
-                                     src="{{ asset('public/upload/default_avatar.png') }}" alt="">
-                            @endif
+                            <div ng-if="mem.avatar != '' ">
+                                <img style="height: 50px; width: 50px;"
+                                     src="{{ asset('public/upload/') }}/@{{ mem.avatar }}" alt="">
+                            </div>
+                            <div ng-if="mem.avatar == '' ">
+                                <img style="height: 50px; width:50px;"
+                                     src="{{ asset('public/upload/default_avatar.png') }}"
+                                     alt=""></div>
+
                         </td>
                         <td>@{{ mem.name }}</td>
                         <td>@{{ mem.age }}</td>
@@ -95,19 +98,32 @@
                             <form name="memberForm" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                                <div class="form-group" flow-init flow-name="uploader.flow"
-                                     flow-files-added="processFiles($files)">
+                                <div class="form-group">
                                     <label for="avatar" class="control-label">Avatar:</label>
-                                    <button flow-btn type="file" name="file" ng-model="member.file">Upload Images
-                                    </button>
-                                    <div ng-repeat="image in uploader.flow.files track by $index">
-                                        <center><img class="preview" flow-img="image"/><br></center>
+                                    <input type="file" ngf-select file ng-model="file" name="file"
+                                           ngf-pattern="'image/*'"
+                                           accept="image/*" ngf-max-size="2MB"
+                                           ngf-model-invalid="errorFile">
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.file.$error.pattern && !memberForm.file.$pristine"
+                                       class="help-block">Please choose file Image (jpg,jpeg,png,gif).</p>
+                                    <p class="alert alert-danger"
+                                       ng-show="memberForm.file.$error.maxSize"
+                                       class="help-block">File too large
+                                        @{{errorFile.size / 1000000|number:1}}MB: max 10M</p>
+                                    <div>
+                                        <center><img style="height: 150px; width: 150px;"
+                                                     ng-show="memberForm.file.$valid" ngf-thumbnail="file"
+                                                     class="thumb"><br></center>
+                                        <button class="btn btn-primary" ng-click="file = null" ng-show="file">Remove
+                                        </button>
                                     </div>
+
                                 </div>
                                 <div class="form-group">
                                     <label for="name" class="control-label">Name:</label>
                                     <input type="text" class="form-control" name="name" ng-model="member.name"
-                                           ng-maxlength="8" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/">
+                                           ng-maxlength="100" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/">
                                     <p class="alert alert-danger"
                                        ng-show="memberForm.name.$error.required && !memberForm.name.$pristine"
                                        class="help-block">Member name is required.</p>

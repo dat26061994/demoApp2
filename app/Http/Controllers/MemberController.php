@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
+use File;
 
 class MemberController extends Controller
 {
@@ -42,10 +43,19 @@ class MemberController extends Controller
     {
         $memberModel = new Member();
         $member = $memberModel->findId($id);
-        $member->avatar = "";
+        $randomString = str_random(10);
         $member->name = $request->name;
         $member->age = $request->age;
         $member->address = $request->address;
+        $imgCurrent = 'public/upload/' . $request->currentImage;
+        if (!empty($request->file('file'))) {
+            $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
+            $member->avatar = $fileName;
+            $request->file('file')->move('public/upload/', $fileName);
+            if (File::exists($imgCurrent)) {
+                File::delete($imgCurrent);
+            }
+        }
         $member->save();
         return "Success";
     }
@@ -54,6 +64,7 @@ class MemberController extends Controller
     {
         $memberModel = new Member();
         $member = $memberModel->findId($id);
+        File::delete('public/upload/' . $member->avatar);
         $member->delete();
     }
 }
