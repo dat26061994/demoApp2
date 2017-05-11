@@ -15,7 +15,7 @@ class MemberController extends Controller
         return $member->getList();
     }
 
-    public function postAdd(Request $request)
+    public function postAdd(MemberRequest $request)
     {
         $member = new Member();
         $randomString = str_random(10);
@@ -39,15 +39,16 @@ class MemberController extends Controller
         return $member->findId($id);
     }
 
-    public function postEdit($id, Request $request)
+    public function postEdit($id, MemberRequest $request)
     {
+
         $memberModel = new Member();
         $member = $memberModel->findId($id);
         $randomString = str_random(10);
         $member->name = $request->name;
         $member->age = $request->age;
         $member->address = $request->address;
-        $imgCurrent = 'public/upload/' . $request->currentImage;
+        $imgCurrent = 'public/upload/' . $request->currentAvatar;
         if (!empty($request->file('file'))) {
             $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
             $member->avatar = $fileName;
