@@ -55,15 +55,10 @@
                     <tr dir-paginate="mem in members | orderBy: sortColumn:reverse | filter:searchData | itemsPerPage: pageSize">
                         <td>@{{ $index + 1 }}</td>
                         <td>
-                            <div ng-if="mem.avatar != '' ">
+                            <div>
                                 <img style="height: 50px; width: 50px;"
                                      src="{{ asset('public/upload/') }}/@{{ mem.avatar }}" alt="">
                             </div>
-                            <div ng-if="mem.avatar == '' ">
-                                <img style="height: 50px; width:50px;"
-                                     src="{{ asset('public/upload/default_avatar.png') }}"
-                                     alt=""></div>
-
                         </td>
                         <td>@{{ mem.name }}</td>
                         <td>@{{ mem.age }}</td>

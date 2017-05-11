@@ -58,6 +58,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     $scope.modal = function (state, id) {
         $scope.state = state;
         if (state == 'add') {
+            $scope.member = {};
             $('#exampleModaladd').modal('show');
         } else if (state == 'edit') {
             $http({
@@ -99,7 +100,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 }
             }).then(function successCallback(response) {
                 swal("Success!", "You clicked the button!", "success");
-                
+                location.reload();
             }, function errorCallback(response) {
                 sweetAlert("Error...", "Something went wrong! Can not add new Member", "error");
             });
@@ -124,7 +125,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 }
             }).then(function successCallback(response) {
                 swal("Success!", "You clicked the button!", "success");
-
+                location.reload();
             }, function errorCallback(response) {
                 sweetAlert("Error...", "Something went wrong! Can not edit member.", "error");
             });

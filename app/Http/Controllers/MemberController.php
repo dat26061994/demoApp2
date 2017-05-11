@@ -27,7 +27,7 @@ class MemberController extends Controller
             $member->avatar = $fileName;
             $request->file('file')->move('public/upload/', $fileName);
         } else {
-            $member->avatar = "";
+            $member->avatar = "default_avatar.png";
         }
         $member->save();
         return "Success";
