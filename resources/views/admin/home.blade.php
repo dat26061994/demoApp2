@@ -85,7 +85,8 @@
 
             </div>
             {{--Modal Add--}}
-            <div class="modal fade" id="exampleModaladd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal fade" id="exampleModaladd" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -125,13 +126,13 @@
                                     <input type="text" class="form-control" name="name" ng-model="member.name"
                                            ng-maxlength="100" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/">
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.name.$error.required && !memberFormadd.name.$pristine"
-                                       class="help-block">Member name is required.</p>
+                                       ng-show="(memberFormadd.name.$dirty || submitted) && memberFormadd.name.$error.required "
+                                       class="help-block">Please enter member name.</p>
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.name.$error.pattern && !memberFormadd.name.$pristine"
+                                       ng-show="memberFormadd.name.$error.pattern "
                                        class="help-block">Single word only!.</p>
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.name.$error.maxlength && !memberFormadd.name.$pristine"
+                                       ng-show="memberFormadd.name.$error.maxlength"
                                        class="help-block">Member name is max 100 character.</p>
                                 </div>
                                 <div class="form-group">
@@ -143,8 +144,8 @@
                                        ng-show="memberFormadd.age.$error.pattern && !memberFormadd.age.$pristine"
                                        class="help-block">Member age is must numberic.</p>
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.age.$error.required && !memberFormadd.age.$pristine"
-                                       class="help-block">Member age is required.</p>
+                                       ng-show="(memberFormadd.age.$dirty || submitted) && memberFormadd.age.$error.required"
+                                       class="help-block">Please enter member age.</p>
                                     <p class="alert alert-danger"
                                        ng-show="memberFormadd.age.$error.maxlength && !memberFormadd.age.$pristine"
                                        class="help-block">Member age is max 2 digits.</p>
@@ -154,8 +155,8 @@
                                     <textarea name="address" class="form-control" ng-model="member.address"
                                               ng-maxlength="300" ng-required="true"></textarea>
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.address.$error.required && !memberFormadd.address.$pristine"
-                                       class="help-block">Member address is required.</p>
+                                       ng-show="(memberFormadd.address.$dirty || submitted) && memberFormadd.address.$error.required"
+                                       class="help-block">Please enter member address.</p>
                                     <p class="alert alert-danger"
                                        ng-show="memberFormadd.address.$error.pattern && !memberFormadd.address.$pristine"
                                        class="help-block">Single word only!.</p>
@@ -173,7 +174,8 @@
             </div>
 
             {{--Modal Edit--}}
-            <div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -210,7 +212,6 @@
                                     <div>
                                         <label for="avatar" class="control-label">Avatar Current:</label>
                                         <center>
-                                            <input type="hidden" name="currentAvatar" value="" class="inputCurrentAvatar">
                                             <img style="height: 150px; width: 150px;" class="avatar" src="" alt="">
                                         </center>
                                     </div>

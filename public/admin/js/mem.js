@@ -24,7 +24,6 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     }).then(function successCallback(response) {
         $scope.members = response.data;
     }, function errorCallback(response) {
-        sweetAlert("Error...", "Something went wrong!", "error");
     });
 
     $scope.valid = {
@@ -58,11 +57,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     /* show modal*/
     $scope.modal = function (state, id) {
         $scope.state = state;
-        if (state == 'add'){
-            $scope.member = {};
-            $scope.file = null;
+        if (state == 'add') {
             $('#exampleModaladd').modal('show');
-        }else if(state == 'edit'){
+        } else if (state == 'edit') {
             $http({
                 method: 'GET',
                 url: 'admin/edit/' + id
@@ -71,7 +68,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 $scope.file = null;
                 $scope.member = response.data;
                 $('.avatar').attr('src', 'public/upload/' + response.data.avatar);
-                $('.inputCurrentAvatar').attr('value',response.data.avatar);
+                $('.inputCurrentAvatar').attr('value', response.data.avatar);
             }, function errorCallback() {
                 sweetAlert("Error...", "Something went wrong!", "error");
             });
@@ -82,6 +79,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     /*Add and Edit Member*/
     $scope.save = function (state, id) {
         if (state == 'add') {
+            $scope.submitted = true;
             $http({
                 method: 'POST',
                 url: 'admin/add',
@@ -101,7 +99,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 }
             }).then(function successCallback(response) {
                 swal("Success!", "You clicked the button!", "success");
-                location.reload();
+                
             }, function errorCallback(response) {
                 sweetAlert("Error...", "Something went wrong! Can not add new Member", "error");
             });
@@ -126,7 +124,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 }
             }).then(function successCallback(response) {
                 swal("Success!", "You clicked the button!", "success");
-                location.reload();
+
             }, function errorCallback(response) {
                 sweetAlert("Error...", "Something went wrong! Can not edit member.", "error");
             });
