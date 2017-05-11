@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MemberRequest;
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use File;
 
 class MemberController extends Controller
@@ -22,14 +23,23 @@ class MemberController extends Controller
         $member->name = $request->name;
         $member->age = $request->age;
         $member->address = $request->address;
-        if (!empty($request->file('file'))) {
-            $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
-            $member->avatar = $fileName;
-            $request->file('file')->move('public/upload/', $fileName);
+        if ($request->hasFile('file')) {
+            $fileType = $request->file->getMimeType();
+            if ($fileType == "image/png" || $fileType == "image/jpg" || $fileType == "image/jpeg") {
+                $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
+                $member->avatar = $fileName;
+                $request->file('file')->move('public/upload/', $fileName);
+            } else {
+                return response()->json([
+                    'level' => 'danger',
+
+                    'message' => 'Image upload too large'
+                ]);
+            }
         } else {
             $member->avatar = "";
         }
-        $member->save();
+
         return "Success";
     }
 

@@ -101,7 +101,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 }
             }).then(function successCallback(response) {
                 swal("Success!", "You clicked the button!", "success");
-                location.reload();
+                
             }, function errorCallback(response) {
                 sweetAlert("Error...", "Something went wrong! Can not add new Member", "error");
             });
