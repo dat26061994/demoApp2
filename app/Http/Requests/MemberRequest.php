@@ -26,16 +26,13 @@ class MemberRequest extends FormRequest
         return [
             'name'  =>  'required|regex:/(^[A-Za-z ]+$)+/|max:100|not_in:undefined',
             'age'   =>  'required|numeric|max:100|not_in:undefined',
-            'address'   =>  'required|max:300|not_in:undefined'
+            'address'   =>  'required|max:300|not_in:undefined',
         ];
     }
 
     public  function messages()
     {
         return [
-            'file.mimes' => 'Please choose file image(jpg,jpeg,png,gif).',
-            'file.max'=>  'File too large(less than 10MB)',
-            'file.not_in'=>'Avatar is not null',
             'name.required'=>'Please enter member name.',
             'name.regex'=>'The name only the word',
             'name.max'=>'The name max is 100 character.',

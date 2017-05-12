@@ -24,7 +24,6 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     }).then(function successCallback(response) {
         $scope.members = response.data;
     }, function errorCallback(response) {
-        sweetAlert("Error...", "Something went wrong!", "error");
     });
 
     $scope.valid = {
@@ -58,11 +57,11 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     /* show modal*/
     $scope.modal = function (state, id) {
         $scope.state = state;
-        if (state == 'add'){
+        if (state == 'add') {
             $scope.member = {};
-            $scope.file = null;
+            $scope.file = "";
             $('#exampleModaladd').modal('show');
-        }else if(state == 'edit'){
+        } else if (state == 'edit') {
             $http({
                 method: 'GET',
                 url: 'admin/edit/' + id
@@ -71,9 +70,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 $scope.file = null;
                 $scope.member = response.data;
                 $('.avatar').attr('src', 'public/upload/' + response.data.avatar);
-                $('.inputCurrentAvatar').attr('value',response.data.avatar);
+                $('.inputCurrentAvatar').attr('value', response.data.avatar);
             }, function errorCallback() {
-                sweetAlert("Error...", "Something went wrong!", "error");
+                sweetAlert("Error...", "Something went wrong! Please contact the admin", "error");
             });
             $('#exampleModaledit').modal('show');
         }
@@ -82,6 +81,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     /*Add and Edit Member*/
     $scope.save = function (state, id) {
         if (state == 'add') {
+            $scope.submitted = true;
             $http({
                 method: 'POST',
                 url: 'admin/add',
