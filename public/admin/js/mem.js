@@ -59,6 +59,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         $scope.state = state;
         if (state == 'add') {
             $scope.member = {};
+            $scope.file = "";
             $('#exampleModaladd').modal('show');
         } else if (state == 'edit') {
             $http({
@@ -71,7 +72,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
                 $('.avatar').attr('src', 'public/upload/' + response.data.avatar);
                 $('.inputCurrentAvatar').attr('value', response.data.avatar);
             }, function errorCallback() {
-                sweetAlert("Error...", "Something went wrong!", "error");
+                sweetAlert("Error...", "Something went wrong! Please contact the admin", "error");
             });
             $('#exampleModaledit').modal('show');
         }
