@@ -60,9 +60,9 @@
                                      src="{{ asset('public/upload/') }}/@{{ mem.avatar }}" alt="">
                             </div>
                         </td>
-                        <td>@{{ mem.name }}</td>
+                        <td>@{{ mem.name | limitTo: 20 }}@{{ mem.name.length >20 ? '...' : '' }}</td>
                         <td>@{{ mem.age }}</td>
-                        <td>@{{ mem.address }}</td>
+                        <td>@{{ mem.address |limitTo:20 }}@{{ mem.address.length >20 ? '...' : '' }}</td>
                         <td style="text-align: center;">
                             <button type="button" class="btn btn-warning" ng-click="modal('edit',mem.id)"><i
                                         class="glyphicon glyphicon-wrench"></i>

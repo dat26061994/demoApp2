@@ -27,17 +27,17 @@ $factory->define(App\Member::class, function (Faker\Generator $faker) {
     return [
         'avatar' => str_random(20),
         'name' => $faker->name,
-        'age' => rand(1,99),
+        'age' => rand(1, 99),
         'address' => $faker->address,
     ];
 });
 
-$factory->define(App\Admin::class,function (Faker\Generator $faker){
+$factory->define(App\Admin::class, function (Faker\Generator $faker) {
     return [
-        'username'=>$faker->username,
-        'name'=>$faker->name,
+        'username' => $faker->username,
+        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => $faker->password,
+        'password' => Hash::make($faker->password),
         'remember_token' => str_random(10),
     ];
 });
