@@ -33,5 +33,5 @@ Route::prefix('admin')->group(function () {
     Route::post('add', ['uses' => 'MemberController@postAdd']);
     Route::get('edit/{id}', ['uses' => 'MemberController@getEdit']);
     Route::post('edit/{id}', ['uses' => 'MemberController@postEdit']);
-    Route::get('delete/{id}', ['uses' => 'MemberController@getDelete']);
+    Route::get('delete/{id}', ['as'=>'admin.edit','uses' => 'MemberController@getDelete']);
 });
