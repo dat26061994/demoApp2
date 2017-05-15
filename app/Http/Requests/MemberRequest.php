@@ -27,6 +27,7 @@ class MemberRequest extends FormRequest
             'name'  =>  'required|regex:/(^[A-Za-z ]+$)+/|max:100|not_in:undefined',
             'age'   =>  'required|numeric|max:100|not_in:undefined',
             'address'   =>  'required|max:300|not_in:undefined',
+            'file'  =>  'nullable|mimes:jpg,jpeg,png,gif|max:10240'
         ];
     }
 
@@ -38,7 +39,7 @@ class MemberRequest extends FormRequest
             'name.max'=>'The name max is 100 character.',
             'name.not_in'=>'The name is not undefined',
             'age.required'=>'Please enter member age.',
-            'age.numeric'=>'The age is mush numberic.',
+            'age.numeric'=>'The age is must numberic.',
             'age.max'=>'The name too large',
             'address.required'=>'Please enter member address.',
             'address.max'=>'The address max is 300 character.',
