@@ -98,9 +98,7 @@
                                 <div class="form-group">
                                     <label for="avatar" class="control-label">New Avatar:</label>
                                     <input type="file" ngf-select file ng-model="file" name="file"
-                                           ngf-pattern="'image/*'"
-                                           accept="image/*" ngf-max-size="2MB"
-                                           ngf-model-invalid="errorFile">
+                                           >
                                     <p class="alert alert-danger"
                                        ng-show="memberFormadd.file.$error.pattern && !memberFormadd.file.$pristine"
                                        class="help-block">Please choose file Image (jpg,jpeg,png,gif).</p>

@@ -27,7 +27,6 @@ class MemberRequest extends FormRequest
             'name'  =>  'required|regex:/(^[A-Za-z ]+$)+/|max:100|not_in:undefined',
             'age'   =>  'required|numeric|max:100|not_in:undefined',
             'address'   =>  'required|max:300|not_in:undefined',
-            'file'  =>  'nullable|mimes:jpg,jpeg,png,gif|max:10240'
         ];
     }
 

@@ -22,14 +22,24 @@ class MemberController extends Controller
         $member->name = $request->name;
         $member->age = $request->age;
         $member->address = $request->address;
-        if (!empty($request->file('file'))) {
-            $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
-            $member->avatar = $fileName;
-            $request->file('file')->move('public/upload/', $fileName);
+        if (isset($request->file) && $request->file !== 'undefined' && $request->file && $request->file !== 'null') {
+            $fileType = $request->file->getClientMimeType();
+            if ($fileType === 'image/png' || $fileType === 'image/jpg' || $fileType === 'image/jpeg' || $fileType === 'image/gif' ){
+                $fileSize = $request->file->getSize();
+                if ($fileSize < 10485760){
+                    $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
+                    $member->avatar = $fileName;
+                    $request->file('file')->move('public/upload/', $fileName);
+                }else{
+                    return response('File to larg',500);
+                }
+            }else{
+                return response('File not form format',500);
+            }
         } else {
             $member->avatar = "default_avatar.png";
         }
-        $member->save();
+        
         return "Success";
     }
 
