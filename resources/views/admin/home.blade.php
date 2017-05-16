@@ -98,14 +98,9 @@
                                 <div class="form-group">
                                     <label for="avatar" class="control-label">New Avatar:</label>
                                     <input type="file" ngf-select file ng-model="file" name="file"
-                                           >
-                                    <p class="alert alert-danger"
-                                       ng-show="memberFormadd.file.$error.pattern && !memberFormadd.file.$pristine"
-                                       class="help-block">Please choose file Image (jpg,jpeg,png,gif).</p>
-                                    <p class="alert alert-danger"
-                                       ng-show="memberFormadd.file.$error.maxSize"
-                                       class="help-block">File too large
-                                        @{{errorFile.size / 1000000|number:1}}MB: max 10M</p>
+                                           onchange="angular.element(this).scope().uploadImage(this.files)">
+                                    <p class="@{{ class }}"
+                                       class="help-block">@{{ message }}</p>
                                     <div>
                                         <center><img style="height: 150px; width: 150px;"
                                                      ng-show="memberFormadd.file.$valid" ngf-thumbnail="file"
@@ -185,16 +180,9 @@
                                 <div class="form-group">
                                     <label for="avatar" class="control-label">New Avatar:</label>
                                     <input type="file" ngf-select file ng-model="file" name="file"
-                                           ngf-pattern="'image/*'"
-                                           accept="image/*" ngf-max-size="2MB"
-                                           ngf-model-invalid="errorFile">
-                                    <p class="alert alert-danger"
-                                       ng-show="memberForm.file.$error.pattern && !memberForm.file.$pristine"
-                                       class="help-block">Please choose file Image (jpg,jpeg,png,gif).</p>
-                                    <p class="alert alert-danger"
-                                       ng-show="memberForm.file.$error.maxSize"
-                                       class="help-block">File too large
-                                        @{{errorFile.size / 1000000|number:1}}MB: max 10M</p>
+                                           onchange="angular.element(this).scope().uploadImage(this.files)">
+                                    <p class="@{{ class }}"
+                                       class="help-block">@{{ message }}</p>
                                     <div>
                                         <center><img style="height: 150px; width: 150px;"
                                                      ng-show="memberForm.file.$valid" ngf-thumbnail="file"

@@ -24,22 +24,22 @@ class MemberController extends Controller
         $member->address = $request->address;
         if (isset($request->file) && $request->file !== 'undefined' && $request->file && $request->file !== 'null') {
             $fileType = $request->file->getClientMimeType();
-            if ($fileType === 'image/png' || $fileType === 'image/jpg' || $fileType === 'image/jpeg' || $fileType === 'image/gif' ){
+            if ($fileType === 'image/png' || $fileType === 'image/jpg' || $fileType === 'image/jpeg' || $fileType === 'image/gif') {
                 $fileSize = $request->file->getSize();
-                if ($fileSize < 10485760){
+                if ($fileSize < 10485760) {
                     $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
                     $member->avatar = $fileName;
                     $request->file('file')->move('public/upload/', $fileName);
-                }else{
-                    return response('File to larg',500);
+                } else {
+                    return response('File to larg', 500);
                 }
-            }else{
-                return response('File not form format',500);
+            } else {
+                return response('File not form format', 500);
             }
         } else {
             $member->avatar = "default_avatar.png";
         }
-        
+        $member->save();
         return "Success";
     }
 
@@ -59,12 +59,22 @@ class MemberController extends Controller
         $member->age = $request->age;
         $member->address = $request->address;
         $imgCurrent = 'public/upload/' . $member->avatar;
-        if (!empty($request->file('file'))) {
-            $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
-            $member->avatar = $fileName;
-            $request->file('file')->move('public/upload/', $fileName);
-            if (File::exists($imgCurrent)) {
-                File::delete($imgCurrent);
+        if (isset($request->file) && $request->file !== 'undefined' && $request->file && $request->file !== 'null') {
+            $fileType = $request->file->getClientMimeType();
+            if ($fileType === 'image/png' || $fileType === 'image/jpg' || $fileType === 'image/jpeg' || $fileType === 'image/gif') {
+                $fileSize = $request->file->getSize();
+                if ($fileSize < 10485760) {
+                    $fileName = $randomString . '-' . $request->file('file')->getClientOriginalName();
+                    $member->avatar = $fileName;
+                    $request->file('file')->move('public/upload/', $fileName);
+                    if (File::exists($imgCurrent) && $imgCurrent !== 'public/upload/default_avatar.png') {
+                        File::delete($imgCurrent);
+                    }
+                } else {
+                    return response('File to large', 500);
+                }
+            } else {
+                return response('File not form format', 500);
             }
         }
         $member->save();
@@ -75,7 +85,9 @@ class MemberController extends Controller
     {
         $memberModel = new Member();
         $member = $memberModel->findId($id);
-        File::delete('public/upload/' . $member->avatar);
+        if ($member->avatar !== 'default_avatar.png') {
+            File::delete('public/upload/' . $member->avatar);
+        }
         $member->delete();
     }
 }
