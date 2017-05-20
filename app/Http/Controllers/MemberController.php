@@ -39,7 +39,7 @@ class MemberController extends Controller
         } else {
             $member->avatar = "default_avatar.png";
         }
-        
+        $member->save();
         return "Success";
     }
 

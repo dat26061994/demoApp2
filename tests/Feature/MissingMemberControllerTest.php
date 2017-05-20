@@ -166,7 +166,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'asdfaffa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -188,7 +188,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'asdfaffa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -210,7 +210,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'asdfaffa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -232,7 +232,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '',
             'address' => 'asdfaffa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -254,7 +254,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '123',
             'address' => 'asdfaffa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -276,7 +276,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => 'asdsad',
             'address' => 'asdfaffa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -298,7 +298,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => ''
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -316,11 +316,11 @@ class MissingMemberControllerTest extends TestCase
         ]);
         $memberId = $member->id;
         $data = [
-            'name' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            'name' => 'ajskldfjak',
             'age' => '22',
             'address' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -329,23 +329,6 @@ class MissingMemberControllerTest extends TestCase
         ]);
     }
 
-    public function testAddImageMoreThan10MB()
-    {
-        $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
-            '1.gif', 'image/gif', 10485760132132113, $error = null, $test = true);
-        $data = [
-            'avatar' => $avatar,
-            'name' => 'Quang Hao',
-            'age' => '12',
-            'address' => 'Ha Nam'
-        ];
-        $response = $this->call('POST', 'admin/add', $data);
-        $this->assertEquals(302, $response->status());
-        $this->assertDatabaseMissing('members', [
-            'name' => 'Quoc Bao',
-            'age' => '23',
-            'address' => 'Thai Ngiuen'
-        ]);
-    }
+
 
 }

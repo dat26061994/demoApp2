@@ -36,13 +36,12 @@ class MemberControllerTest extends TestCase
 
     public function testAddNewMember()
     {
-        $admin = factory(Admin::class)->create();
         $data = [
             'name' => 'Trinh Xuan Dat',
             'age' => '23',
             'address' => 'Bac Giang',
         ];
-        $response = $this->actingAs($admin)->call('POST', 'admin/add', $data);
+        $response = $this->call('POST', 'admin/add', $data);
         $this->assertDatabaseHas('members', [
             'name' => $data['name'],
             'age' => $data['age'],
