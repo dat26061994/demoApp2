@@ -24,7 +24,6 @@ class MissingMemberControllerTest extends TestCase
             'age' => '23',
             'address' => 'Ha Noi'
         ];
-
         $response = $this->call('POST', 'admin/add', $data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
@@ -166,7 +165,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'asdfaffa'
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -188,7 +191,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'asdfaffa'
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -210,7 +217,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'asdfaffa'
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -232,7 +243,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => '',
             'address' => 'asdfaffa'
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -254,7 +269,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => '123',
             'address' => 'asdfaffa'
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -276,7 +295,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => 'asdsad',
             'address' => 'asdfaffa'
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -298,7 +321,11 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => ''
         ];
+<<<<<<< HEAD
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -316,11 +343,19 @@ class MissingMemberControllerTest extends TestCase
         ]);
         $memberId = $member->id;
         $data = [
+<<<<<<< HEAD
             'name' => 'ajskldfjak',
             'age' => '22',
             'address' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         ];
         $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
+=======
+            'name' => 'asda',
+            'age' => '22',
+            'address' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+        ];
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -329,6 +364,107 @@ class MissingMemberControllerTest extends TestCase
         ]);
     }
 
+<<<<<<< HEAD
 
+=======
+    public function testAddImageMoreThan10MB()
+    {
+        $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
+            'abc.png', 'image/png', 12345678998745631, $error = null,
+            $test = true);
+
+        $data = [
+            'avatar' => $avatar,
+            'name' => 'Dat',
+            'age' => '23',
+            'address' => 'Bac Giang'
+        ];
+        $response = $this->call('POST', 'admin/add', $data);
+        $this->assertEquals(200, $response->status());
+        $this->assertDatabaseMissing('members', [
+            'avatar' => $data['avatar'],
+            'name' => $data['name'],
+            'age' => $data['age'],
+            'address' => $data['address']
+        ]);
+
+    }
+
+    public function testEditImageMoreThan10MB()
+    {
+        $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
+            'abc.png', 'image/png', 12345678998745631, $error = null,
+            $test = true);
+        $member = factory(Member::class)->create([
+            'name' => 'adsfasdf',
+            'age' => '11',
+            'address' => 'Ha Noi'
+        ]);
+        $memberId = $member->id;
+        $data = [
+            'avatar' => $avatar,
+            'name' => 'Dat',
+            'age' => '23',
+            'address' => 'Bac Giang'
+        ];
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+        $this->assertEquals(200, $response->status());
+        $this->assertDatabaseMissing('members', [
+            'avatar' => $data['avatar'],
+            'name' => $data['name'],
+            'age' => $data['age'],
+            'address' => $data['address']
+        ]);
+    }
+
+    public function testAddImageInvalid()
+    {
+        $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
+            'abc.txt', 'text/txt', 1234, $error = null,
+            $test = true);
+
+        $data = [
+            'avatar' => $avatar,
+            'name' => 'Dat',
+            'age' => '23',
+            'address' => 'Bac Giang'
+        ];
+        $response = $this->call('POST', 'admin/add', $data);
+        $this->assertEquals(200, $response->status());
+        $this->assertDatabaseMissing('members', [
+            'avatar' => $data['avatar'],
+            'name' => $data['name'],
+            'age' => $data['age'],
+            'address' => $data['address']
+        ]);
+    }
+
+    public function testEditImageInvalid()
+    {
+        $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
+            'abc.txt', 'text/txt', 1234, $error = null,
+            $test = true);
+        $member = factory(Member::class)->create([
+            'name' => 'adsfasdf',
+            'age' => '11',
+            'address' => 'Ha Noi'
+        ]);
+        $memberId = $member->id;
+        $data = [
+            'avatar' => $avatar,
+            'name' => 'Dat',
+            'age' => '23',
+            'address' => 'Bac Giang'
+        ];
+        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+        $this->assertEquals(200, $response->status());
+        $this->assertDatabaseMissing('members', [
+            'avatar' => $data['avatar'],
+            'name' => $data['name'],
+            'age' => $data['age'],
+            'address' => $data['address']
+        ]);
+    }
+>>>>>>> d7e60282126b6729f4a9dedf7f3a4c7d0ec699b1
 
 }

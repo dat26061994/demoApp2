@@ -278,7 +278,7 @@ class MemberControllerTest extends TestCase
     public function testAddImageLessThan10MB()
     {
         $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.png'),
-            '1.png', 'image/png', 10485760, $error = null, $test = true);
+            '1.png', 'image/png', 123, $error = null, $test = true);
         $dataAdd = [
             'avatar' => $avatar,
             'name' => 'Duy',
@@ -298,7 +298,7 @@ class MemberControllerTest extends TestCase
     public function testEditImageLessThan10MB()
     {
         $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.png'),
-            '1.png', 'image/png', 10485760, $error = null, $test = true);
+            '1.png', 'image/png', 123, $error = null, $test = true);
         $member = factory(Member::class)->create([
             'avatar' => '1.png',
             'name' => 'Loi',
@@ -324,7 +324,7 @@ class MemberControllerTest extends TestCase
     public function testAddImageJpg()
     {
         $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
-            '1.jpg', 'image/jpg', 10485760, $error = null, $test = true);
+            '1.jpg', 'image/jpg', 123, $error = null, $test = true);
         $data = [
             'avatar' => $avatar,
             'name' => 'BAo Li',
@@ -343,7 +343,7 @@ class MemberControllerTest extends TestCase
     public function testAddImagePng()
     {
         $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.png'),
-            '1.png', 'image/png', 10485760, $error = null, $test = true);
+            '1.png', 'image/png', 123, $error = null, $test = true);
         $data = [
             'avatar' => $avatar,
             'name' => 'BAo Li',
@@ -362,7 +362,7 @@ class MemberControllerTest extends TestCase
     public function testAddImageGif()
     {
         $avatar = new \Symfony\Component\HttpFoundation\File\UploadedFile(public_path('upload\1.jpg'),
-            '1.gif', 'image/gif', 10485760, $error = null, $test = true);
+            '1.gif', 'image/gif', 123, $error = null, $test = true);
         $data = [
             'avatar' => $avatar,
             'name' => 'BAo Li',
