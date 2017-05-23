@@ -101,11 +101,11 @@
                                            onchange="angular.element(this).scope().uploadImage(this.files)">
                                     <p ng-show = "file" class="@{{ class }}"
                                        class="help-block">@{{ message }}</p>
-                                    <div>
+                                    <div ng-show="file && error == 0">
                                         <center><img style="height: 150px; width: 150px;"
-                                                     ng-show="file" ngf-thumbnail="file"
+                                                      ngf-thumbnail="file"
                                                      class="thumb"><br></center>
-                                        <button class="btn btn-primary" ng-click="file = null" ng-show="file">Remove
+                                        <button class="btn btn-primary" ng-click="file = null">Remove
                                         </button>
                                     </div>
                                 </div>
@@ -114,7 +114,7 @@
                                     <input type="text" class="form-control" name="name" ng-model="member.name"
                                            ng-maxlength="100" required ng-pattern="/^[a-zA-Z\s]*$/">
                                     <p class="alert alert-danger"
-                                       ng-show="!memberFormadd.name.$pristine && memberFormadd.name.$error.required "
+                                       ng-show="!memberFormadd.name.$pristine && memberFormadd.name.$error.required || submitted "
                                        class="help-block">Please enter member name.</p>
                                     <p class="alert alert-danger"
                                        ng-show="memberFormadd.name.$error.pattern && !memberFormadd.name.$pristine "

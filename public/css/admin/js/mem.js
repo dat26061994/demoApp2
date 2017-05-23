@@ -37,15 +37,18 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
             var fileSize = files[0].size;
             if (fileSize > 1048576) {
                 $scope.class = "alert alert-danger";
+                $scope.error = 1;
                 $scope.message = "File to large." + fileSize / 1048576 + "MB>10MB";
             } else {
                 $scope.class = "alert alert-success";
                 $scope.message = "You can use this file";
+                $scope.error = 0;
             }
         }
         else {
             $scope.class = "alert alert-danger";
             $scope.message = "Invalid File Format(jpg,jpeg,png,gif)";
+            $scope.error = 1;
         }
     }
 
@@ -100,7 +103,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
     /*Add and Edit Member*/
     $scope.save = function (state, id) {
         if (state == 'add') {
-            $scope.submitted = true;
+            $scope.submitted = false;
             $http({
                 method: 'POST',
                 url: 'admin/add',
