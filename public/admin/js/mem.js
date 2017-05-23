@@ -35,9 +35,9 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
         var ext = files[0].name.match(/\.(.+)$/)[1];
         if (angular.lowercase(ext) === 'jpg' || angular.lowercase(ext) === 'jpeg' || angular.lowercase(ext) === 'png' || angular.lowercase(ext) === 'gif') {
             var fileSize = files[0].size;
-            if (fileSize > 1048576) {
+            if (fileSize > 10485760) {
                 $scope.class = "alert alert-danger";
-                $scope.message = "File to large." + fileSize / 1048576 + "MB>10MB";
+                $scope.message = "File to large." + fileSize / 10485760 + "MB>10MB";
             } else {
                 $scope.class = "alert alert-success";
                 $scope.message = "You can use this file";
@@ -74,6 +74,7 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
 
     /* show modal*/
     $scope.modal = function (state, id) {
+        $scope.memberFormadd.$invalid(true);
         $scope.state = state;
         if (state == 'add') {
             $scope.member = {};

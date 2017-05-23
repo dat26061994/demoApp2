@@ -74,11 +74,12 @@ app.controller('MemberController', function ($scope, $http, $httpParamSerializer
 
     /* show modal*/
     $scope.modal = function (state, id) {
+        $('#exampleModaladd').modal('show');
         $scope.state = state;
         if (state == 'add') {
             $scope.member = {};
-            $scope.file = "";
-            $('#exampleModaladd').modal('show');
+            $scope.file = null;
+            $scope.memberFormadd.$setPristine();
         } else if (state == 'edit') {
             $http({
                 method: 'GET',

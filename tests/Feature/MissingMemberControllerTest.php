@@ -319,7 +319,7 @@ class MissingMemberControllerTest extends TestCase
             'age' => '22',
             'address' => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         ];
-        $response = $this->call('POST', 'admin/edit/' . $memberId, $data);
+        $response = $this->call('POST', 'admin/edit/' . $memberId,$data);
         $this->assertEquals(302, $response->status());
         $this->assertDatabaseMissing('members', [
             'name' => $data['name'],
@@ -426,5 +426,4 @@ class MissingMemberControllerTest extends TestCase
             'address' => $data['address']
         ]);
     }
-
 }

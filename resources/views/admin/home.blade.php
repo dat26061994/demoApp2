@@ -99,11 +99,11 @@
                                     <label for="avatar" class="control-label">New Avatar:</label>
                                     <input type="file" ngf-select file ng-model="file" name="file"
                                            onchange="angular.element(this).scope().uploadImage(this.files)">
-                                    <p class="@{{ class }}"
+                                    <p ng-show = "file" class="@{{ class }}"
                                        class="help-block">@{{ message }}</p>
                                     <div>
                                         <center><img style="height: 150px; width: 150px;"
-                                                     ng-show="memberFormadd.file.$valid" ngf-thumbnail="file"
+                                                     ng-show="file" ngf-thumbnail="file"
                                                      class="thumb"><br></center>
                                         <button class="btn btn-primary" ng-click="file = null" ng-show="file">Remove
                                         </button>
@@ -112,15 +112,15 @@
                                 <div class="form-group">
                                     <label for="name" class="control-label">Name:</label>
                                     <input type="text" class="form-control" name="name" ng-model="member.name"
-                                           ng-maxlength="100" ng-required="true" ng-pattern="/^[a-zA-Z\s]*$/">
+                                           ng-maxlength="100" required ng-pattern="/^[a-zA-Z\s]*$/">
                                     <p class="alert alert-danger"
-                                       ng-show="(memberFormadd.name.$dirty || submitted) && memberFormadd.name.$error.required "
+                                       ng-show="!memberFormadd.name.$pristine && memberFormadd.name.$error.required "
                                        class="help-block">Please enter member name.</p>
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.name.$error.pattern "
+                                       ng-show="memberFormadd.name.$error.pattern && !memberFormadd.name.$pristine "
                                        class="help-block">Single word only!.</p>
                                     <p class="alert alert-danger"
-                                       ng-show="memberFormadd.name.$error.maxlength"
+                                       ng-show="memberFormadd.name.$error.maxlength && !memberFormadd.name.$pristine"
                                        class="help-block">Member name is max 100 character.</p>
                                 </div>
                                 <div class="form-group">
@@ -132,7 +132,7 @@
                                        ng-show="memberFormadd.age.$error.pattern && !memberFormadd.age.$pristine"
                                        class="help-block">Member age is must numberic.</p>
                                     <p class="alert alert-danger"
-                                       ng-show="(memberFormadd.age.$dirty || submitted) && memberFormadd.age.$error.required"
+                                       ng-show="!memberFormadd.age.$pristine && memberFormadd.age.$error.required"
                                        class="help-block">Please enter member age.</p>
                                     <p class="alert alert-danger"
                                        ng-show="memberFormadd.age.$error.maxlength && !memberFormadd.age.$pristine"
@@ -143,7 +143,7 @@
                                     <textarea name="address" class="form-control" ng-model="member.address"
                                               ng-maxlength="300" ng-required="true"></textarea>
                                     <p class="alert alert-danger"
-                                       ng-show="(memberFormadd.address.$dirty || submitted) && memberFormadd.address.$error.required"
+                                       ng-show="!memberFormadd.address.$pristine && memberFormadd.address.$error.required"
                                        class="help-block">Please enter member address.</p>
                                     <p class="alert alert-danger"
                                        ng-show="memberFormadd.address.$error.pattern && !memberFormadd.address.$pristine"
